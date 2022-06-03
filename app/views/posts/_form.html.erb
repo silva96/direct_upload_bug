@@ -1,0 +1,24 @@
+<%= form_with(model: post) do |form| %>
+  <% if post.errors.any? %>
+    <div style="color: red">
+      <h2><%= pluralize(post.errors.count, "error") %> prohibited this post from being saved:</h2>
+
+      <ul>
+        <% post.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div data-controller="direct-upload">
+    <p><%= form.label :title, style: "display: block" %></p>
+    <p><%= form.text_field :title %></p>
+    <p><%= form.file_field :thumbnail, direct_upload: true %></p>
+    <p><%= form.file_field :images, direct_upload: true, multiple: true, data: { action: 'direct-upload#submit' } %></p>
+  </div>
+
+  <div>
+    <%= form.submit %>
+  </div>
+<% end %>
